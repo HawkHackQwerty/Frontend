@@ -1,22 +1,15 @@
-import {
-  ChakraProvider,
-  Heading,
-  Container,
-  Text
-} from "@chakra-ui/react";
-import { useState } from 'react'
 import Navbar from "./components/Navbar";
-import Background from "./components/Background";
-
+import Sign from "./components/Sign";
+import Profile from "./components/Profile"
 
 function App() {
 
   return (
     <>
-    <Navbar />
-    <Background />
+      <Navbar />
+      <Profile />
     </>
   )
 }
 
-export default App
+export default App;

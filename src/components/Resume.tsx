@@ -1,36 +1,31 @@
 import {
-ChakraProvider,
-Heading,
-Container,
-Text,
-Avatar,
-Box
+  ChakraProvider,
+  Box
 } from "@chakra-ui/react";
-import { useState } from 'react'
-import job from '../assets/job.png' 
+import job from '../assets/job.png'
 
 
 function Resume() {
 
-return (
+  return (
     <>
-    <ChakraProvider>
-    <Box sx={{
-            width: '100vw',
-            height: '91vh',
-            backgroundImage: job,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            display: 'flex',
-            justifyContent: 'flex-start',
-            paddingLeft: '10vw',
-        }} > 
+      <ChakraProvider>
+        <Box sx={{
+          width: '100vw',
+          height: '91vh',
+          backgroundImage: job,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          display: 'flex',
+          justifyContent: 'flex-start',
+          paddingLeft: '10vw',
+        }} >
 
 
-    </Box>
-    </ChakraProvider>
+        </Box>
+      </ChakraProvider>
     </>
-)
+  )
 }
 
 export default Resume
