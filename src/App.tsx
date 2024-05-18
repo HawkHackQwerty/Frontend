@@ -1,35 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { SettingsIcon } from '@chakra-ui/icons' 
+import { ChakraProvider, IconButton, Button } from '@chakra-ui/react'
+import { Tooltip } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
+import { Avatar } from '@chakra-ui/react'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export const App = () => {
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <Box bg='gray' w='100%' p={15} h={70} pl={1320} color='white'> 
+    <ChakraProvider>
+    <Tooltip hasArrow label='settings' bg='gray.300' color='black'>
+      <IconButton
+      isRound={true}
+      variant='solid'
+      colorScheme='blue'
+      aria-label='Done' 
+      fontSize='30px'
+      icon={<SettingsIcon />} />
+    </Tooltip>
+    <Box h={1}>
+    <Avatar src='https://bit.ly/broken-link' />
+    </Box>
+    </ChakraProvider>
+    </Box>
     </>
   )
 }
-
-export default App
