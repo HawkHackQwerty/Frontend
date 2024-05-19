@@ -7,16 +7,21 @@ import {
 import { useState } from 'react'
 import Navbar from "./components/Navbar";
 import Background from "./components/Background";
+import Resume from "./components/Resume";
+import RecordView from "./components/VideoRecorder";
 
 
 function App() {
 
   return (
     <>
-    <Navbar />
-    <Background />
+    {/* <Navbar />
+    <Background /> */}
+    {/* <Resume /> */}
+    <RecordView />
     </>
   )
 }
 
 export default App
+
