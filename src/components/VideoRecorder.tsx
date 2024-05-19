@@ -89,11 +89,11 @@ const RecordView: React.FC = () => {
       const url = URL.createObjectURL(myFile); // Create a download URL
       const a = document.createElement("a");
       a.href = url;
-      a.download = "recorded_video.webm"; // Set the filename
-      document.body.appendChild(a);
-      a.click();
-      URL.revokeObjectURL(url); // Release the object URL
-      document.body.removeChild(a); // Remove the temporary anchor element
+      // a.download = "recorded_video.webm"; // Set the filename
+      // document.body.appendChild(a);
+      // a.click();
+      // URL.revokeObjectURL(url); // Release the object URL
+      // document.body.removeChild(a); // Remove the temporary anchor element
       return myFile;
     } else {
       console.log("error");

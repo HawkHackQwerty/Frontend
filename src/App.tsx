@@ -15,10 +15,8 @@ function App() {
 
   return (
     <>
-    {/* <Navbar />
-    <Background /> */}
-    {/* <Resume /> */}
-    <RecordView />
+    <Navbar />
+    <Resume />
     </>
   )
 }

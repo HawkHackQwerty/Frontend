@@ -1,13 +1,25 @@
+
 .container {
-    max-width: 600px;
     margin: 0 auto;
-    padding: 20px;
+    margin-top: 100px;
+    margin-left: 100px;
+    background-color: white;
+    padding: 20px; /* Adjusted padding for a better fit */
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Avenir', sans-serif; /* Custom font */
+    max-width: 800px; /* Set a max-width for better layout */
+    max-height: 640px;
+    width: 100%;
   }
   
+  h2 {
+    font-size: 45px; /* Adjust the size as needed */
+    font-weight: bold; /* Optional: Ensure the font is bold */
+    text-align: center; /* Optional: Center-align the text */
+  }
+
   .header {
     text-align: center;
     margin-bottom: 20px;
@@ -16,11 +28,16 @@
   .video-container {
     margin-bottom: 20px;
     position: relative;
+    width: 100%; /* Ensure the container takes full width */
+    height: 450px; /* Set a fixed height for the video container */
   }
   
-  .live-video {
+  .live-video,
+  .recorded-video {
     width: 100%;
+    height: 100%;
     border-radius: 8px;
+    object-fit: cover; /* Ensures the video covers the container without distortion */
   }
   
   .button-container {
@@ -39,12 +56,6 @@
     cursor: pointer;
     font-size: 16px;
     font-weight: bold; /* Make the button text bold */
-  }
-  
-  .recorded-video {
-    width: 100%;
-    border-radius: 8px;
-    margin-top: 20px;
   }
   
   .recording-indicator {

@@ -26,7 +26,7 @@ return (
             paddingLeft: '10vw',
         }} > 
 
-      <Text marginTop="100px" fontSize="5xl" fontFamily="body">Welcome to AImployment!</Text>
+      <Text marginTop="100px" fontSize="5xl" fontFamily="body">Welcome to AImploy!</Text>
 
     </Box>
     </ChakraProvider>

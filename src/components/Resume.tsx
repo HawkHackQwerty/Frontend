@@ -8,7 +8,8 @@ Box
 } from "@chakra-ui/react";
 import { useState } from 'react'
 import job from '../assets/job.png' 
-
+import RecordView from "./VideoRecorder";
+import "./RecordView.css";
 
 function Resume() {
 
@@ -22,11 +23,9 @@ return (
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             display: 'flex',
-            justifyContent: 'flex-start',
-            paddingLeft: '10vw',
+            justifyContent: 'center',
         }} > 
-
-
+        <RecordView />
     </Box>
     </ChakraProvider>
     </>
