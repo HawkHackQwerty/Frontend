@@ -1,0 +1,193 @@
+body {
+    margin: 0;
+    font-family: 'Avenir', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* .header {
+    width: 97.8%;
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+} */
+
+.header {
+    width: 97.8%;
+    background: linear-gradient(90deg, #0056b3, #007bff); /* Gradient background */
+    color: white;
+    padding: 20px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1); /* Box shadow at top and bottom */
+    position: sticky; /* Make the header sticky */
+    top: 0; /* Stick to the top */
+    z-index: 1000; /* Ensure it stays above other content */
+  }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.button {
+    background-color: #007bff; /* Blue */
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+  
+.button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 70vh;
+    position: relative;
+    background: url('https://images.squarespace-cdn.com/content/v1/56b295f91bbee05e086dbc6f/d024342c-afaf-4c8a-845e-55f4528e4d4e/Collaboration.jpeg') center/cover no-repeat;
+    color: white;
+    text-align: center;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5); /* Translucent white */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #000; /* Black color for the header */
+}
+
+.hero p {
+    font-size: 24px;
+    margin-bottom: 40px;
+    color: #000;
+}
+
+.cta-button {
+    background-color: #28a745;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 23px;
+    font-family: 'Avenir', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #218838;
+}
+
+.features {
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+}
+
+.features h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.feature-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.feature {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: left;
+}
+
+.feature h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 16px;
+}
+
+.about {
+    width: 100%;
+    padding: 60px 20px;
+    text-align: center;
+    background-color: #e9ecef;
+}
+
+.about h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.footer {
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #343a40;
+    color: white;
+}
+
+.footer h2 {
+    width: 100%;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.footer p {
+    width: 100%;
+    font-size: 16px;
+    margin: 5px 0;
+}
