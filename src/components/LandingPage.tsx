@@ -1,21 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
+import Navbar from './Navbar';
 
 const LandingPage: React.FC = () => {
   return (
     <div className="landing-page">
-      <header className="header">
-        <nav className="navbar">
-          <div className="logo">AImploy</div>
-          <ul className="nav-links">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><Link to="/login" className="button">Login</Link></li>
-          </ul>
-        </nav>
-      </header>
+      <Navbar />
       <section className="hero">
         <div className="hero-content">
           <h1>Welcome to AImploy</h1>
