@@ -3,11 +3,8 @@ import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Link } from 'react-router-dom';
 import job from '../assets/job.png';
-<<<<<<< HEAD
 import Navbar from "./Navbar";
-=======
 import axios from 'axios';
->>>>>>> cd609a00584ccc53fa7c903d4d5b2aa1ad76368a
 
 function Letter() {
   const [pdfUrl, setPdfUrl] = useState(null);
