@@ -5,6 +5,7 @@ import job from '../assets/job.png';
 
 function Resume() {
   const [pdfUrl, setPdfUrl] = useState(null);
+  const [feedback, setFeedback] = useState("");
 
   const onFileDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -19,9 +20,12 @@ function Resume() {
   };
 
   const handleSubmitPdf = () => {
-    // Logic for submitting the uploaded PDF
-    // This function will be executed when the "Submit PDF" button is clicked
+    // recieve the feedback and the score on the resume here and then give it 
+    // this is where it will set the feedback to whatever the api call retreives and it will make it work!
+
     console.log("Submitting PDF:", pdfUrl);
+    // For example, set feedback to some value after submission
+    setFeedback("Thank you for your submission!");
   };
 
   return (
@@ -36,11 +40,11 @@ function Resume() {
           display: 'flex',
           justifyContent: 'flex-start',
           alignItems: 'center',
-          paddingLeft: '10vw', // Move to the left
+          paddingLeft: '3vw', // Move to the left
         }}
       >
         <Box>
-          <Box width="800px" height="750px" marginBottom="100px" my="auto" >
+          <Box width="800px" height="750px" marginBottom="100px" my="auto">
             {pdfUrl ? (
               <iframe src={pdfUrl} title="Uploaded PDF" width="100%" height="100%" frameBorder="0" />
             ) : (
@@ -57,6 +61,25 @@ function Resume() {
           <Button marginTop="30px" width="350px" mx="auto" colorScheme="teal" onClick={handleReplacePdf}>Replace PDF</Button>
           <Button marginTop="30px" width="350px" float="right" mx="auto" colorScheme="teal" onClick={handleSubmitPdf}>Submit PDF</Button>
         </Box>
+
+        {feedback && (
+          <Box
+            width="500px"
+            height="700px"
+            backgroundColor="white"
+            border="1px solid gray"
+            boxShadow="md"
+            borderRadius="md"
+            p="4"
+            position="absolute"
+            top="55%"
+            right="12vw"
+            transform="translateY(-50%)"
+          >
+            <Text fontSize="xl" fontWeight="bold" mb="4">Score: { score }</Text>
+            <Text>{feedback}</Text>
+          </Box>
+        )}
       </Box>
     </ChakraProvider>
   );
