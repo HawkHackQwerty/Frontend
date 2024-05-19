@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Link } from 'react-router-dom';
 import job from '../assets/job.png';
+import axios from "axios";
 import Navbar from "./Navbar";
 
 function Resume() {
   const [pdfUrl, setPdfUrl] = useState(null);
   const [feedback, setFeedback] = useState("");
-  const [score, setScore] = useState("");
+  const [score, setScore] = useState(null);
 
   const onFileDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -22,11 +23,37 @@ function Resume() {
     setPdfUrl(null); // Clear the current PDF
   };
 
-  const handleSubmitPdf = () => {
+  const handleSubmitPdf = async () => {
     console.log("Submitting PDF:", pdfUrl);
-    // For example, set feedback to some value after submission
-    setFeedback("Thank you for your submission!");
-    setScore("85"); // Example score
+
+    if (!pdfUrl) {
+      console.error("No PDF URL provided");
+      return;
+    }
+
+    try {
+      // MAKE THIS WORK
+      const pdfBlob = await fetch(pdfUrl).then(response => response.blob());
+
+      // Create a FormData object to send the PDF file
+      const formData = new FormData();
+      const pdfFile = new File([pdfBlob], "resume.pdf", { type: "application/pdf" });
+      formData.append("file", pdfFile);
+
+      // Send the PDF file to the endpoint using Axios
+      const response = await axios.post("your-api-endpoint", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Assuming the response contains feedback, set it to the feedback state
+      setScore(response.data.score);
+      setFeedback(response.data.feedback);
+    } catch (error) {
+      console.error("Error submitting PDF:", error);
+      setFeedback("There was an error submitting your PDF.");
+    }
   };
 
   return (

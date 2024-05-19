@@ -3,7 +3,11 @@ import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Link } from 'react-router-dom';
 import job from '../assets/job.png';
+<<<<<<< HEAD
 import Navbar from "./Navbar";
+=======
+import axios from 'axios';
+>>>>>>> cd609a00584ccc53fa7c903d4d5b2aa1ad76368a
 
 function Letter() {
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -21,11 +25,36 @@ function Letter() {
     setPdfUrl(null); // Clear the current PDF
   };
 
-  const handleSubmitPdf = () => {
-    // Logic for submitting the uploaded PDF
+  const handleSubmitPdf = async () => {
     console.log("Submitting PDF:", pdfUrl);
-    // For example, set new_cv to some value after submission
-    setNewCv("Thank you for your submission!");
+
+    if (!pdfUrl) {
+      console.error("No PDF URL provided");
+      return;
+    }
+
+    try {
+      // MAKE THIS WORK
+      const pdfBlob = await fetch(pdfUrl).then(response => response.blob());
+
+      // Create a FormData object to send the PDF file
+      const formData = new FormData();
+      const pdfFile = new File([pdfBlob], "cover_letter.pdf", { type: "application/pdf" });
+      formData.append("file", pdfFile);
+
+      // Send the PDF file to the endpoint using Axios
+      const response = await axios.post("your-api-endpoint", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      // Assuming the response contains the new cover letter, set it to the new_cv state
+      setNewCv(response.data.new_cover_letter);
+    } catch (error) {
+      console.error("Error submitting PDF:", error);
+      setNewCv("There was an error submitting your PDF.");
+    }
   };
 
   return (
