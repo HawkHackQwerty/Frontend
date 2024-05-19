@@ -129,6 +129,7 @@ body {
     width: 100%;
     text-align: center;
     background-color: #fff;
+    padding: 30px;
 }
 
 .features h2 {
@@ -141,6 +142,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    padding: 10px;
 }
 
 .feature {
@@ -163,7 +165,7 @@ body {
 
 .about {
     width: 100%;
-    padding: 60px 20px;
+    padding: 45px;
     text-align: center;
     background-color: #e9ecef;
 }
@@ -183,8 +185,8 @@ body {
 
 .footer h2 {
     width: 100%;
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 36px;
+    margin-bottom: 20px;
 }
 
 .footer p {

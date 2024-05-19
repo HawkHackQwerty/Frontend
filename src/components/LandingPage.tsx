@@ -39,9 +39,7 @@ const LandingPage: React.FC = () => {
       </section>
       <footer id="contact" className="footer">
         <h2>Contact Us</h2>
-        <p>Email: support@aimploy.com</p>
-        <p>Phone: +1 (800) 123-4567</p>
-        <p>&copy; 2024 AImploy. All rights reserved.</p>
+        <p>Email: support@aimploy.com | Phone: +1 (800) 123-4567 | &copy; 2024 AImploy. All rights reserved.</p>
       </footer>
     </div>
   );
