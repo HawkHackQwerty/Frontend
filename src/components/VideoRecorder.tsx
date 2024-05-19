@@ -46,12 +46,15 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { useReactMediaRecorder } from "react-media-recorder";
+import { ChakraProvider, Box, Text, Button } from "@chakra-ui/react";
+import axios from "axios"; // Import Axios
 import "./RecordView.css";
 
 const RecordView: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isRecording, setIsRecording] = useState(false); // State for recording indicator
   const [mediaBlobUrl, setMediaBlobUrl] = useState<string | null>(null); // State to store mediaBlobUrl
+  const [feedback, setFeedback] = useState<string>("");
 
   const {
     status,
@@ -60,8 +63,9 @@ const RecordView: React.FC = () => {
     previewStream,
   } = useReactMediaRecorder({
     video: true,
-    onStop: (blobUrl) => {
+    onStop: async (blobUrl) => {
       setMediaBlobUrl(blobUrl); // Store mediaBlobUrl when recording stops
+      await sendRecording(blobUrl); // Send recording when recording stops
     },
   });
 
@@ -75,34 +79,23 @@ const RecordView: React.FC = () => {
     setIsRecording(status === "recording"); // Update recording indicator state
   }, [status]);
 
-  const downloadRecording = async () => {
-    if (mediaBlobUrl) {
-      const mediaBlob = await fetch(mediaBlobUrl)
-        .then(response => response.blob());
+  const sendRecording = async (blobUrl: string) => {
+    try {
+      {/* SEND THE VIDEO HERE */}
+      const response = await axios.post("your-api-endpoint", {
+        recording: blobUrl,
+      });
 
-      const myFile = new File(
-        [mediaBlob],
-        "recorded_video.webm",
-        { type: 'video/webm' }
-      );
+      setFeedback(response.data.Video_feedback);
 
-      const url = URL.createObjectURL(myFile); // Create a download URL
-      const a = document.createElement("a");
-      a.href = url;
-      // a.download = "recorded_video.webm"; // Set the filename
-      // document.body.appendChild(a);
-      // a.click();
-      // URL.revokeObjectURL(url); // Release the object URL
-      // document.body.removeChild(a); // Remove the temporary anchor element
-      return myFile;
-    } else {
-      console.log("error");
+      console.log("Recording sent:", response.data);
+    } catch (error) {
+      console.error("Error sending recording:", error);
     }
   };
 
   const handleStopRecording = () => {
     stopRecording(); // Stop recording
-    downloadRecording(); // Download the recording
   };
 
   useEffect(() => {
@@ -132,10 +125,28 @@ const RecordView: React.FC = () => {
         <button onClick={startRecording} className="record-button">Start Recording</button>
         <button onClick={handleStopRecording} className="stop-button">Stop Recording</button>
       </div>
+
+      {feedback && (
+          <Box
+            width="500px"
+            height="700px"
+            backgroundColor="white"
+            border="1px solid gray"
+            boxShadow="md"
+            borderRadius="md"
+            p="4"
+            position="absolute"
+            top="55%"
+            right="12vw"
+            transform="translateY(-50%)"
+          >
+            <Text fontSize="xl" fontWeight="bold" mb="4">Your Feedback:</Text>
+            <Text>{feedback}</Text>
+          </Box>
+        )}
+
     </div>
   );
 };
 
 export default RecordView;
-
-
