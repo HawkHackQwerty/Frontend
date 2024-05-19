@@ -11,7 +11,9 @@ const LandingPage: React.FC = () => {
         <div className="hero-content">
           <h1>Welcome to AImploy</h1>
           <p>Your AI-powered career advancement partner</p>
-          <button className="cta-button">Get Started</button>
+          <Link to="/login">
+            <button className="cta-button">Get Started</button>
+          </Link>
         </div>
       </section>
       <section id="features" className="features">

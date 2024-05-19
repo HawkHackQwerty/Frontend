@@ -7,8 +7,9 @@ import {
   Button,
   Heading,
   useColorModeValue,
-  
+
 } from "@chakra-ui/react";
+import Navbar from "./Navbar";
 import SignOptions from "../helper/Sign";
 import job from '../assets/job.png';
 
@@ -18,6 +19,8 @@ const Sign = () => {
   const formBackground = useColorModeValue("white", "gray.700");
 
   return (
+    <>
+    <Navbar />
     <ChakraProvider>
       <Box
         width="100vw"
@@ -63,6 +66,7 @@ const Sign = () => {
         </Flex>
       </Box>
     </ChakraProvider>
+    </>
   );
 };
 
