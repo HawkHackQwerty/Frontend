@@ -9,12 +9,13 @@ import Navbar from "./components/Navbar";
 import Background from "./components/Background";
 import LandingPage from "./components/LandingPage";
 import Sign from './components/Sign';
+import { Outlet } from "react-router";
 
 function App() {
 
   return (
     <>
-    <LandingPage />
+    <Outlet />
     </>
   )
 }
@@ -31,17 +32,21 @@ export default App
 // import Navbar from "./components/Navbar";
 // import Background from "./components/Background";
 
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+// import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 // import LandingPage from "./components/LandingPage";
 // import Sign from './components/Sign';
 
-// const App = () => (
-//   <Router>
-//     <Switch>
-//       <Route exact path="/" component={LandingPage} />
-//       {/* <Route path="/login" component={Sign} /> */}
-//     </Switch>
-//   </Router>
-// );
-
-// export default App
+// export const App = () => {
+//   return (
+//     <Router>
+//       <Switch>
+//         <Route exact path="/">
+//           <LandingPage />
+//         </Route>
+//         <Route path="/login"> 
+//           <Sign />
+//         </Route>
+//       </Switch>
+//     </Router>
+//   )
+// }
