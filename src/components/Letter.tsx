@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import job from '../assets/job.png';
 
-function Resume() {
+function Letter() {
   const [pdfUrl, setPdfUrl] = useState(null);
-  const [feedback, setFeedback] = useState("");
+  const [new_cv, setNewCv] = useState(null); // State variable to control rendering
 
   const onFileDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -20,12 +20,10 @@ function Resume() {
   };
 
   const handleSubmitPdf = () => {
-    // recieve the feedback and the score on the resume here and then give it 
-    // this is where it will set the feedback to whatever the api call retreives and it will make it work!
-
+    // Logic for submitting the uploaded PDF
     console.log("Submitting PDF:", pdfUrl);
-    // For example, set feedback to some value after submission
-    setFeedback("Thank you for your submission!");
+    // For example, set new_cv to some value after submission
+    setNewCv("Thank you for your submission!");
   };
 
   return (
@@ -44,6 +42,8 @@ function Resume() {
         }}
       >
         <Box>
+          <Text>Here, you can upload your cover letter for editing! If there are any parts you would like edited, ENSURE you put</Text>
+          <Text marginBottom="10px">them into curly brackets, everything outside will be left untouched!</Text>
           <Box width="800px" height="750px" marginBottom="100px" my="auto">
             {pdfUrl ? (
               <iframe src={pdfUrl} title="Uploaded PDF" width="100%" height="100%" frameBorder="0" />
@@ -62,22 +62,25 @@ function Resume() {
           <Button marginTop="30px" width="350px" float="right" mx="auto" colorScheme="teal" onClick={handleSubmitPdf}>Submit PDF</Button>
         </Box>
 
-        {feedback && (
-          <Box
-            width="500px"
-            height="700px"
+        {new_cv && (
+            <Box
+            width="700px"
+            height="850px"
             backgroundColor="white"
             border="1px solid gray"
-            boxShadow="md"
+            boxShadow="lg"
             borderRadius="md"
-            p="4"
+            p="6"
             position="absolute"
-            top="55%"
-            right="12vw"
+            top="53%"
+            right="5vw"
             transform="translateY(-50%)"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
           >
-            <Text fontSize="xl" fontWeight="bold" mb="4">Score: { score }</Text>
-            <Text>{feedback}</Text>
+            <Text fontSize="2xl" fontWeight="bold" mb="4">Your New Cover Letter!</Text>
+            <Text textAlign="center">{ new_cv }</Text>
           </Box>
         )}
       </Box>
@@ -85,4 +88,4 @@ function Resume() {
   );
 }
 
-export default Resume;
+export default Letter;

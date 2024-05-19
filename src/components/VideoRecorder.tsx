@@ -118,7 +118,6 @@ const RecordView: React.FC = () => {
         <h2>Interview Prep</h2>
       </div>
       <div className="video-container">
-        {/* Show live webcam feed or recorded video */}
         <video
           ref={videoRef}
           autoPlay
