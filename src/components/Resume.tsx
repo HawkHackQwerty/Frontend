@@ -1,11 +1,14 @@
-import { ChakraProvider, Box, Text, Button } from "@chakra-ui/react";
+import { ChakraProvider, Box, Text, Button, Flex } from "@chakra-ui/react";
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { Link } from 'react-router-dom';
 import job from '../assets/job.png';
+import Navbar from "./Navbar";
 
 function Resume() {
   const [pdfUrl, setPdfUrl] = useState(null);
   const [feedback, setFeedback] = useState("");
+  const [score, setScore] = useState("");
 
   const onFileDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
@@ -20,68 +23,99 @@ function Resume() {
   };
 
   const handleSubmitPdf = () => {
-    // recieve the feedback and the score on the resume here and then give it 
-    // this is where it will set the feedback to whatever the api call retreives and it will make it work!
-
     console.log("Submitting PDF:", pdfUrl);
     // For example, set feedback to some value after submission
     setFeedback("Thank you for your submission!");
+    setScore("85"); // Example score
   };
 
   return (
-    <ChakraProvider>
-      <Box
-        sx={{
-          width: '100vw',
-          height: '91vh',
-          backgroundImage: `url(${job})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          display: 'flex',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          paddingLeft: '3vw', // Move to the left
-        }}
-      >
-        <Box>
-          <Box width="800px" height="750px" marginBottom="100px" my="auto">
-            {pdfUrl ? (
-              <iframe src={pdfUrl} title="Uploaded PDF" width="100%" height="100%" frameBorder="0" />
-            ) : (
-              <Box {...getRootProps()} textAlign="center" border="2px" borderRadius="md" p="20px" cursor="pointer">
-                <input {...getInputProps()} accept=".pdf" />
-                {isDragActive ? (
-                  <Text>Drop the PDF file here ...</Text>
-                ) : (
-                  <Text>Upload The PDF File here!</Text>
-                )}
-              </Box>
-            )}
+    <>
+      <Navbar />
+      <ChakraProvider>
+        <Box
+          sx={{
+            width: '100vw',
+            height: '91vh',
+            backgroundImage: `url(${job})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            display: 'flex',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            paddingLeft: '3vw', // Move to the left
+          }}
+        >
+          <Box>
+            <Text fontSize="3xl" fontWeight="bold" marginBottom="20px" marginTop="35px">Resume Feedback</Text> {/* Title */}
+            <Box width="800px" height="750px" marginBottom="100px" my="auto">
+              {pdfUrl ? (
+                <iframe src={pdfUrl} title="Uploaded PDF" width="100%" height="100%" frameBorder="0" />
+              ) : (
+                <Box {...getRootProps()} textAlign="center" border="2px" borderRadius="md" p="20px" cursor="pointer">
+                  <input {...getInputProps()} accept=".pdf" />
+                  {isDragActive ? (
+                    <Text>Drop the PDF file here ...</Text>
+                  ) : (
+                    <Text>Upload The PDF File here!</Text>
+                  )}
+                </Box>
+              )}
+            </Box>
+            <Button marginTop="-40px" width="350px" mx="auto" colorScheme="teal" onClick={handleReplacePdf}>Replace PDF</Button>
+            <Button marginTop="-26px" width="350px" float="right" mx="auto" colorScheme="teal" onClick={handleSubmitPdf}>Submit PDF</Button>
           </Box>
-          <Button marginTop="30px" width="350px" mx="auto" colorScheme="teal" onClick={handleReplacePdf}>Replace PDF</Button>
-          <Button marginTop="30px" width="350px" float="right" mx="auto" colorScheme="teal" onClick={handleSubmitPdf}>Submit PDF</Button>
-        </Box>
 
-        {feedback && (
-          <Box
-            width="500px"
-            height="700px"
-            backgroundColor="white"
-            border="1px solid gray"
-            boxShadow="md"
-            borderRadius="md"
-            p="4"
+          {feedback && (
+            <Box
+              width="500px"
+              height="700px"
+              backgroundColor="white"
+              border="1px solid gray"
+              boxShadow="md"
+              borderRadius="md"
+              p="4"
+              position="absolute"
+              top="55%"
+              right="12vw"
+              transform="translateY(-50%)"
+            >
+              <Text fontSize="xl" fontWeight="bold" mb="4">Score: {score}</Text>
+              <Text>{feedback}</Text>
+            </Box>
+          )}
+
+          <Flex
             position="absolute"
-            top="55%"
-            right="12vw"
-            transform="translateY(-50%)"
+            bottom="20px"
+            right="20px"
+            justifyContent="flex-end"
+            gap="10px"
           >
-            <Text fontSize="xl" fontWeight="bold" mb="4">Score: { score }</Text>
-            <Text>{feedback}</Text>
-          </Box>
-        )}
-      </Box>
-    </ChakraProvider>
+            <Button
+              as={Link}
+              to="/user" // Replace with the actual path of your previous page
+              colorScheme="blue"
+              bg="blue.500"
+              color="white"
+              _hover={{ bg: "blue.600" }}
+            >
+              Previous
+            </Button>
+            <Button
+              as={Link}
+              to="/letter" // Replace with the actual path of your next page
+              colorScheme="blue"
+              bg="blue.500"
+              color="white"
+              _hover={{ bg: "blue.600" }}
+            >
+              Next
+            </Button>
+          </Flex>
+        </Box>
+      </ChakraProvider>
+    </>
   );
 }
 

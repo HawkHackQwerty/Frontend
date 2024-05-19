@@ -15,21 +15,25 @@ import Letter from "./Letter";
 import JobUpload from "./jobUpload";
 import Interview from "./interview";
 import PageSeparator from "./pageSep";
+import { Outlet } from "react-router-dom";
 
 function UserPage() {
 
     return (
+        // <>
+        // <ChakraProvider>
+        // <Navbar />
+        // <JobUpload />
+        // <PageSeparator />
+        // <Resume />
+        // <PageSeparator />
+        // <Letter />
+        // <PageSeparator />
+        // <Interview />
+        // </ChakraProvider>
+        // </>
         <>
-        <ChakraProvider>
-        <Navbar />
-        <JobUpload />
-        <PageSeparator />
-        <Resume />
-        <PageSeparator />
-        <Letter />
-        <PageSeparator />
-        <Interview />
-        </ChakraProvider>
+            <JobUpload />
         </>
     )
 }

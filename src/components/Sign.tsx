@@ -12,6 +12,7 @@ import {
 import Navbar from "./Navbar";
 import SignOptions from "../helper/Sign";
 import job from '../assets/job.png';
+import { Link } from 'react-router-dom';
 
 const Sign = () => {
   const [signState, setSignState] = React.useState<SignOptions>(SignOptions.SignUp);
@@ -49,20 +50,26 @@ const Sign = () => {
           </Heading>
           <Input placeholder="Email" variant="filled" mb={3} type="email" />
           <Input placeholder="Password" variant="filled" mb={6} type="password" />
+          <Link to="/user">
           <Button
             colorScheme="teal"
+            width="100%"
             mb={4}
             onClick={() => setSignState(SignOptions.SignUp)}
           >
-            {signState === SignOptions.SignUp ? 'Sign Up' : 'Switch to Sign Up'}
+            {signState === SignOptions.SignUp ? 'Sign Up' : 'Login'}
           </Button>
+          </Link>
+          <Link>
           <Button
             colorScheme="teal"
+            width="100%"
             variant="outline"
             onClick={() => setSignState(SignOptions.SignIn)}
           >
-            {signState === SignOptions.SignIn ? 'Login' : 'Switch to Login'}
+            {signState === SignOptions.SignIn ? 'Switch to Sign Up' : 'Switch to Login'}
           </Button>
+          </Link>
         </Flex>
       </Box>
     </ChakraProvider>

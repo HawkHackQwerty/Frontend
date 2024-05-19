@@ -3,11 +3,15 @@ import {
     Box,
     Input,
     Button,
+    Flex,
+    Spacer,
     Heading,
   } from "@chakra-ui/react";
-  import { useState } from 'react'
-  import job from '../assets/job.png' 
-  import "./RecordView.css";
+import { useState } from 'react'
+import job from '../assets/job.png' 
+import "./RecordView.css";
+import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
   
   function JobUpload() {
     const [jobTitle, setJobTitle] = useState("");
@@ -31,6 +35,8 @@ import {
     };
   
     return (
+      <>
+      <Navbar />
       <ChakraProvider>
         <Box
           sx={{
@@ -43,7 +49,7 @@ import {
             justifyContent: 'center',
             alignItems: 'center',
           }}
-        > 
+        >
           <Box
             bg="white"
             p={8}
@@ -54,14 +60,13 @@ import {
               placeholder="Job Title"
               value={jobTitle}
               onChange={handleJobTitleChange}
-              mb={4}
-            />
+              mb={4} />
             <Input
               placeholder="Job Description"
               value={jobDescription}
               onChange={handleJobDescriptionChange}
-              mb={4}
-            />
+              mb={4} />
+            <Flex>
             <Button
               colorScheme="blue"
               onClick={handleSubmit}
@@ -69,9 +74,22 @@ import {
             >
               Submit
             </Button>
+            <Spacer />
+            <Button
+              as={Link}
+              to="/resume" // Replace with the actual path of your next page
+              colorScheme="blue"
+              bg="blue.500"
+              color="white"
+              _hover={{ bg: "blue.600" }}
+            >
+              Next
+            </Button>
+          </Flex>
           </Box>
         </Box>
       </ChakraProvider>
+      </>
     )
   }
   
