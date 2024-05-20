@@ -1,49 +1,3 @@
-// import React, { useState, useRef, useEffect } from "react";
-// import { useReactMediaRecorder } from "react-media-recorder";
-
-// const RecordView: React.FC = () => {
-//   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
-//   const videoRef = useRef<HTMLVideoElement>(null);
-
-//   const {
-//     status,
-//     startRecording,
-//     stopRecording,
-//     mediaBlobUrl,
-//     previewStream,
-//   } = useReactMediaRecorder({ video: true });
-
-//   useEffect(() => {
-//     if (previewStream && videoRef.current) {
-//       videoRef.current.srcObject = previewStream;
-//     }
-//   }, [previewStream]);
-
-//   const handleGranted = (stream: MediaStream) => {
-//     setMediaStream(stream);
-//   };
-
-//   return (
-//     <div>
-//       <p>{status}</p>
-//       {/* Show live webcam feed */}
-//       <video
-//         ref={videoRef}
-//         autoPlay
-//         muted
-//         controls={false}
-//         playsInline
-//       />
-//       <button onClick={startRecording}>Start Recording</button>
-//       <button onClick={stopRecording}>Stop Recording</button>
-//       {/* Show recorded video */}
-//       {mediaBlobUrl && <video src={mediaBlobUrl} controls autoPlay loop />}
-//     </div>
-//   );
-// };
-
-// export default RecordView;
-
 import React, { useState, useRef, useEffect } from "react";
 import { useReactMediaRecorder } from "react-media-recorder";
 import { ChakraProvider, Box, Text, Button } from "@chakra-ui/react";
@@ -63,9 +17,9 @@ const RecordView: React.FC = () => {
     previewStream,
   } = useReactMediaRecorder({
     video: true,
-    onStop: async (blobUrl) => {
+    onStop: async (blobUrl, blob) => {
       setMediaBlobUrl(blobUrl); // Store mediaBlobUrl when recording stops
-      await sendRecording(blobUrl); // Send recording when recording stops
+      await sendRecording(blob); // Send recording when recording stops
     },
   });
 
@@ -79,14 +33,18 @@ const RecordView: React.FC = () => {
     setIsRecording(status === "recording"); // Update recording indicator state
   }, [status]);
 
-  const sendRecording = async (blobUrl: string) => {
+  const sendRecording = async (blob: Blob) => {
     try {
-      {/* SEND THE VIDEO HERE */}
-      const response = await axios.post("your-api-endpoint", {
-        recording: blobUrl,
+      const formData = new FormData();
+      formData.append("file", blob, "recording.webm");
+
+      const response = await axios.post("http://127.0.0.1:5000/video", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
-      setFeedback(response.data.Video_feedback);
+      setFeedback(response.data.feedback);
 
       console.log("Recording sent:", response.data);
     } catch (error) {
@@ -109,6 +67,7 @@ const RecordView: React.FC = () => {
     <div className="container">
       <div className="header">
         <h2>Interview Prep</h2>
+        <h1>Tell me about yourself!</h1>
       </div>
       <div className="video-container">
         <video
@@ -127,24 +86,22 @@ const RecordView: React.FC = () => {
       </div>
 
       {feedback && (
-          <Box
-            width="500px"
-            height="700px"
-            backgroundColor="white"
-            border="1px solid gray"
-            boxShadow="md"
-            borderRadius="md"
-            p="4"
-            position="absolute"
-            top="55%"
-            right="12vw"
-            transform="translateY(-50%)"
-          >
-            <Text fontSize="xl" fontWeight="bold" mb="4">Your Feedback:</Text>
-            <Text>{feedback}</Text>
-          </Box>
-        )}
-
+        <Box
+          width="500px"
+          height="700px"
+          backgroundColor="white"
+          border="1px solid gray"
+          boxShadow="md"
+          borderRadius="md"
+          p="4"
+          position="absolute"
+          top="22%"
+          right="12vw"
+        >
+          <Text fontSize="xl" fontWeight="bold" mb="4">Your Feedback:</Text>
+          <Text>{feedback}</Text>
+        </Box>
+      )}
     </div>
   );
 };

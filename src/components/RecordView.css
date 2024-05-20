@@ -10,12 +10,18 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Avenir', sans-serif; /* Custom font */
     max-width: 800px; /* Set a max-width for better layout */
-    max-height: 680px;
+    max-height: 720px;
     width: 100%;
   }
   
   h2 {
     font-size: 45px; /* Adjust the size as needed */
+    font-weight: bold; /* Optional: Ensure the font is bold */
+    text-align: center; /* Optional: Center-align the text */
+  }
+
+  h1 {
+    font-size: 25px; /* Adjust the size as needed */
     font-weight: bold; /* Optional: Ensure the font is bold */
     text-align: center; /* Optional: Center-align the text */
   }

@@ -1,51 +1,49 @@
-import { ChakraProvider, Box, Text, Button } from "@chakra-ui/react";
+import { ChakraProvider, Box, Text, Button, Flex } from "@chakra-ui/react";
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import job from '../assets/job.png';
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Navbar from "./Navbar";
 
 function Resume() {
-  const [pdfUrl, setPdfUrl] = useState(null);
+  const [pdfFile, setPdfFile] = useState(null); // State to store the PDF file
+  const [pdfUrl, setPdfUrl] = useState(null); // State to store the PDF URL for preview
   const [feedback, setFeedback] = useState("");
   const [score, setScore] = useState(null);
 
   const onFileDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
     const fileUrl = URL.createObjectURL(file);
+    setPdfFile(file);
     setPdfUrl(fileUrl);
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: onFileDrop });
 
   const handleReplacePdf = () => {
-    setPdfUrl(null); // Clear the current PDF
+    setPdfFile(null);
+    setPdfUrl(null);
   };
 
   const handleSubmitPdf = async () => {
-    console.log("Submitting PDF:", pdfUrl);
+    console.log("Submitting PDF:", pdfFile);
 
-    if (!pdfUrl) {
-      console.error("No PDF URL provided");
+    if (!pdfFile) {
+      console.error("No PDF file provided");
       return;
     }
 
     try {
-      // MAKE THIS WORK
-      const pdfBlob = await fetch(pdfUrl).then(response => response.blob());
-
-      // Create a FormData object to send the PDF file
       const formData = new FormData();
-      const pdfFile = new File([pdfBlob], "resume.pdf", { type: "application/pdf" });
       formData.append("file", pdfFile);
 
-      // Send the PDF file to the endpoint using Axios
-      const response = await axios.post("your-api-endpoint", formData, {
+      const response = await axios.post("http://127.0.0.1:5000/resume", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      // Assuming the response contains feedback, set it to the feedback state
       setScore(response.data.score);
       setFeedback(response.data.feedback);
     } catch (error) {
@@ -56,6 +54,7 @@ function Resume() {
 
   return (
     <ChakraProvider>
+      <Navbar />
       <Box
         sx={{
           width: '100vw',
@@ -70,6 +69,7 @@ function Resume() {
         }}
       >
         <Box>
+        <Text fontSize="3xl" fontWeight="bold" marginBottom="10px" marginTop="15px">Resume Feedback</Text> {/* Title */}
           <Box width="800px" height="750px" marginBottom="100px" my="auto">
             {pdfUrl ? (
               <iframe src={pdfUrl} title="Uploaded PDF" width="100%" height="100%" frameBorder="0" />
@@ -98,14 +98,44 @@ function Resume() {
             borderRadius="md"
             p="4"
             position="absolute"
-            top="55%"
+            top="56%"
             right="12vw"
             transform="translateY(-50%)"
           >
-            <Text fontSize="xl" fontWeight="bold" mb="4">Score: { score }</Text>
+            <Text fontSize="xl" fontWeight="bold" mb="4">Score: {score}</Text>
             <Text>{feedback}</Text>
           </Box>
         )}
+
+          <Flex
+            position="absolute"
+            bottom="20px"
+            right="20px"
+            justifyContent="flex-end"
+            gap="10px"
+          >
+            <Button
+              as={Link}
+              to="/user" // Replace with the actual path of your previous page
+              colorScheme="blue"
+              bg="blue.500"
+              color="white"
+              _hover={{ bg: "blue.600" }}
+            >
+              Previous
+            </Button>
+            <Button
+              as={Link}
+              to="/letter" // Replace with the actual path of your next page
+              colorScheme="blue"
+              bg="blue.500"
+              color="white"
+              _hover={{ bg: "blue.600" }}
+            >
+              Next
+            </Button>
+          </Flex>
+
       </Box>
     </ChakraProvider>
   );

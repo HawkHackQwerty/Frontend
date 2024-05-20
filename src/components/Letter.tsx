@@ -1,59 +1,60 @@
-import { ChakraProvider, Box, Text, Button } from "@chakra-ui/react";
+import { ChakraProvider, Box, Text, Button, Flex } from "@chakra-ui/react";
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import job from '../assets/job.png';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
+import axios from "axios";
+import Navbar from "./Navbar";
 
 function Letter() {
-  const [pdfUrl, setPdfUrl] = useState(null);
-  const [new_cv, setNewCv] = useState(null); // State variable to control rendering
+  const [pdfFile, setPdfFile] = useState(null); // State variable to store the PDF file
+  const [newCv, setNewCv] = useState(null); // State variable to store the new cover letter
+  const [isRecording, setIsRecording] = useState(false); // State for recording indicator
 
   const onFileDrop = (acceptedFiles) => {
     const file = acceptedFiles[0];
-    const fileUrl = URL.createObjectURL(file);
-    setPdfUrl(fileUrl);
+    setPdfFile(file); // Set the PDF file directly
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: onFileDrop });
 
   const handleReplacePdf = () => {
-    setPdfUrl(null); // Clear the current PDF
+    setPdfFile(null); // Clear the current PDF
   };
 
   const handleSubmitPdf = async () => {
-    console.log("Submitting PDF:", pdfUrl);
-
-    if (!pdfUrl) {
-      console.error("No PDF URL provided");
+    console.log("Submitting PDF:", pdfFile);
+  
+    if (!pdfFile) {
+      console.error("No PDF file provided");
       return;
     }
-
+  
     try {
-      // MAKE THIS WORK
-      const pdfBlob = await fetch(pdfUrl).then(response => response.blob());
-
-      // Create a FormData object to send the PDF file
       const formData = new FormData();
-      const pdfFile = new File([pdfBlob], "cover_letter.pdf", { type: "application/pdf" });
       formData.append("file", pdfFile);
-
-      // Send the PDF file to the endpoint using Axios
-      const response = await axios.post("your-api-endpoint", formData, {
+  
+      const response = await axios.post("http://127.0.0.1:5000/letter", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-
-      // Assuming the response contains the new cover letter, set it to the new_cv state
-      setNewCv(response.data.new_cover_letter);
+  
+      // Assuming the response contains the new cover letter, set it to the newCv state
+      setNewCv(response.data.new_letter);
     } catch (error) {
       console.error("Error submitting PDF:", error);
       setNewCv("There was an error submitting your PDF.");
     }
   };
 
+  const toggleRecording = () => {
+    setIsRecording((prev) => !prev);
+  };
+
   return (
     <ChakraProvider>
+      <Navbar />
       <Box
         sx={{
           width: '100vw',
@@ -68,11 +69,10 @@ function Letter() {
         }}
       >
         <Box>
-          <Text>Here, you can upload your cover letter for editing! If there are any parts you would like edited, ENSURE you put</Text>
-          <Text marginBottom="10px">them into curly brackets, everything outside will be left untouched!</Text>
+        <Text fontSize="3xl" fontWeight="bold" mb="10px">Cover Letter Editing</Text>
           <Box width="800px" height="750px" marginBottom="100px" my="auto">
-            {pdfUrl ? (
-              <iframe src={pdfUrl} title="Uploaded PDF" width="100%" height="100%" frameBorder="0" />
+            {pdfFile ? (
+              <iframe src={URL.createObjectURL(pdfFile)} title="Uploaded PDF" width="100%" height="100%" frameBorder="0" />
             ) : (
               <Box {...getRootProps()} textAlign="center" border="2px" borderRadius="md" p="20px" cursor="pointer">
                 <input {...getInputProps()} accept=".pdf" />
@@ -88,10 +88,10 @@ function Letter() {
           <Button marginTop="30px" width="350px" float="right" mx="auto" colorScheme="teal" onClick={handleSubmitPdf}>Submit PDF</Button>
         </Box>
 
-        {new_cv && (
-            <Box
+        {newCv && (
+          <Box
             width="700px"
-            height="850px"
+            height="800px"
             backgroundColor="white"
             border="1px solid gray"
             boxShadow="lg"
@@ -106,9 +106,38 @@ function Letter() {
             alignItems="center"
           >
             <Text fontSize="2xl" fontWeight="bold" mb="4">Your New Cover Letter!</Text>
-            <Text textAlign="center">{ new_cv }</Text>
+            <Text textAlign="center">{newCv}</Text>
           </Box>
         )}
+
+        <Flex
+            position="absolute"
+            bottom="20px"
+            right="20px"
+            justifyContent="flex-end"
+            gap="10px"
+          >
+            <Button
+              as={Link}
+              to="/resume" // Replace with the actual path of your previous page
+              colorScheme="blue"
+              bg="blue.500"
+              color="white"
+              _hover={{ bg: "blue.600" }}
+            >
+              Previous
+            </Button>
+            <Button
+              as={Link}
+              to="/interview" // Replace with the actual path of your next page
+              colorScheme="blue"
+              bg="blue.500"
+              color="white"
+              _hover={{ bg: "blue.600" }}
+            >
+              Next
+            </Button>
+          </Flex>
       </Box>
     </ChakraProvider>
   );
